@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<head>
+    <title>WebClient demo</title>
+</head>
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+<script type="text/javascript">
+    $(document).ready(function(){
+        var connection = new WebSocket('ws://localhost:9000/socket');
+        var $baseNumber = $('.base-number');
+
+        connection.onopen = function() {
+        connection.send('Iam an web browser :)');
+        };
+
+    connection.onmessage = function(e) {
+            switch (e.data) {
+            case "next":
+               $baseNumber.each(function() {
+                $(this).html(parseInt($(this).html()) + 1 );
+                });
+                break;
+            case "prev":
+                $baseNumber.each(function() {
+                $(this).html(parseInt($(this).html()) - 1 );
+                });
+                break;
+            default:
+                alert("I dont know what is " + e.data);
+            };
+
+        var numberOfBugs = parseInt($baseNumber.html());
+        numberOfBugs *= 1.2;
+        numberOfBugs = Math.floor(numberOfBugs);
+        $('#additional-number').html(numberOfBugs);
+        };
+    });
+</script>
+<html>
+    <body>
+    <h1>
+        Welcome to demo page, now proceed to android application and play around with buttons ;)
+    </h1>
+     <p>
+         <span class="base-number">99</span> little bugs in the code<br />
+         <span class="base-number">99</span> little bugs in the code<br />
+         Take one down, patch it around<br />
+         <span id="additional-number">117</span> little bugs in the code
+     </p>
+    </body>
+</html>
+
