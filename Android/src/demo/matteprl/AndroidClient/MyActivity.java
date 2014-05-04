@@ -24,7 +24,7 @@ public class MyActivity extends Activity implements View.OnClickListener {
     /**
      * Called when the activity is first created.
      */
-    public PlayClient ws;
+    public WebSocketClient ws;
 
     TextView status;
     Button forwardButton;
@@ -33,7 +33,27 @@ public class MyActivity extends Activity implements View.OnClickListener {
 
     public MyActivity() {
         try {
-            ws = new PlayClient(new URI("ws://172.19.8.54:9000/socket"));
+            ws = new WebSocketClient(new URI("ws://localhost:9000/socket")) {
+                @Override
+                public void onOpen(ServerHandshake serverHandshake) {
+
+                }
+
+                @Override
+                public void onMessage(String s) {
+
+                }
+
+                @Override
+                public void onClose(int i, String s, boolean b) {
+
+                }
+
+                @Override
+                public void onError(Exception e) {
+
+                }
+            };
         } catch (URISyntaxException e) {
             e.printStackTrace();
         }
